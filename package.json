@@ -1,0 +1,57 @@
+{
+  "name": "bluezone-api",
+  "version": "0.1.0",
+  "description": "Bluezone Serverless API",
+  "main": "index.js",
+  "repository": "git@github.com:genghishack/bluezone-api.git",
+  "author": "Chris Wade <genghishack@gmail.com>",
+  "license": "MIT",
+  "private": true,
+  "devDependencies": {
+    "babel-core": "^6.26.3",
+    "babel-eslint": "^10.0.1",
+    "babel-loader": "^7.1.4",
+    "babel-plugin-source-map-support": "^1.0.0",
+    "babel-plugin-transform-runtime": "^6.23.0",
+    "babel-preset-env": "^1.7.0",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-stage-3": "^6.24.1",
+    "babel-register": "^6.26.0",
+    "eslint": "^5.4.0",
+    "eslint-config-airbnb": "^17.1.0",
+    "eslint-import-resolver-typescript": "^1.1.1",
+    "eslint-plugin-import": "^2.14.0",
+    "eslint-plugin-jsx-a11y": "^6.1.1",
+    "eslint-plugin-react": "^7.11.0",
+    "jest": "^21.2.1",
+    "serverless-offline": "^3.25.6",
+    "serverless-webpack": "^5.1.0",
+    "webpack": "^4.16.2",
+    "webpack-node-externals": "^1.6.0"
+  },
+  "babel": {
+    "plugins": [
+      "transform-runtime"
+    ],
+    "presets": [
+      [
+        "env",
+        {
+          "node": "8.10"
+        }
+      ],
+      "stage-3",
+      "es2015"
+    ],
+    "sourceMaps": true,
+    "retainLines": true
+  },
+  "dependencies": {
+    "aws-sdk": "^2.529.0",
+    "babel-runtime": "^6.26.0",
+    "moment": "^2.24.0",
+    "pg": "^7.12.1",
+    "source-map-support": "^0.5.13",
+    "uuid": "^3.3.3"
+  }
+}

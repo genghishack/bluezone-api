@@ -1,0 +1,79 @@
+import collectionHandlers from './foo/collectionHandlers';
+import itemHandlers from './foo/itemHandlers';
+import actionHandlers from './foo/actionHandlers';
+import constants from '../libs/constants';
+import { getUserDataFromEvent } from '../libs/event';
+import { buildResponse, failure } from '../libs/response-lib';
+import { logError } from '../libs/logging';
+
+const { regex } = constants;
+
+/**
+ * Route the call to '/foo', '/foo/{id}' and '/foo/{action}/{id}' end points
+ *
+ * @export
+ * @param {Object} event
+ * @param {Object} context
+ * @param {function} callback
+ */
+export async function router(event, context, callback) {
+  const { httpMethod, pathParameters, body } = event;
+
+  console.log('event: ', event);
+  console.log('httpMethod: ', httpMethod);
+  console.log('pathParameters: ', pathParameters);
+  console.log('body: ', body);
+
+  let action;
+  let id;
+  let data;
+
+  const userData = await getUserDataFromEvent(event);
+  console.log('userData: ', userData);
+
+  if (body) {
+    data = JSON.parse(body);
+  }
+
+  if (pathParameters) {
+    let { action: stringToTest } = pathParameters;
+    if (stringToTest.indexOf(':') !== -1) {
+      stringToTest = stringToTest.split(':')[1];
+    }
+    if (regex.uuid.test(stringToTest)) {
+      id = pathParameters.action;
+    } else {
+      action = pathParameters.action;
+      id = pathParameters.id;
+    }
+  }
+
+  let response = buildResponse(405, {
+    message: `Invalid HTTP Method: ${httpMethod}`,
+  });
+
+  let handlers = actionHandlers;
+  if (!action && !id) {
+    handlers = collectionHandlers;
+  } else if (id && !action) {
+    handlers = itemHandlers;
+  }
+
+  try {
+    if (httpMethod in handlers) {
+      if (!action) {
+        response = await handlers[httpMethod](userData, id, data);
+      } else if (action in handlers[httpMethod]) {
+        response = await handlers[httpMethod][action](userData, id, data);
+      } else {
+        response = buildResponse(406, {
+          message: `Invalid Request: ${httpMethod} ${action}`,
+        });
+      }
+    }
+    return callback(null, response);
+  } catch (e) {
+    logError(e);
+    return callback(null, failure({ error: e.message }));
+  }
+}

@@ -1,0 +1,69 @@
+service: main
+
+# Use the serverless-webpack plugin to transpile ES6
+plugins:
+  - serverless-webpack
+  - serverless-offline
+
+package:
+  include:
+    - ../node_modules
+
+# serverless-webpack configuration
+# Enable auto-packing of external modules
+custom:
+  webpack:
+    webpackConfig: ./webpack.config.js
+    includeModules:
+      packagePath: ../package.json
+
+provider:
+  name: aws
+  runtime: nodejs8.10
+  stage: ${opt:stage}
+  region: us-west-2
+  apiGateway:
+    restApiId:
+      'Fn::ImportValue': apiGateway-restApiId
+    restApiRootResourceId:
+      'Fn::ImportValue': apiGateway-rootResourceId
+  # 'iamRoleStatements' defines the permission policy for the Lambda function.
+  # In this case Lambda functions are granted with permissions to access DynamoDB.
+  iamRoleStatements:
+    - Effect: Allow
+      Action:
+        - ssm:GetParameter*
+      Resource: 'arn:aws:ssm:us-west-2:*:parameter/*'
+#    - Effect: Allow
+#      Action:
+#        - cognito-idp:AdminListGroupsForUser
+#        - cognito-idp:AdminAddUserToGroup
+#        - cognito-idp:AdminDeleteUser
+#        - cognito-idp:AdminGetUser
+#      Resource:
+#        'Fn::ImportValue': CognitoUserPool-arn
+    - Effect: Allow
+      Action:
+        - lambda:InvokeFunction
+      Resource: '*'
+
+functions:
+  foo:
+    handler: foo.router
+    events:
+      - http:
+          path: foo
+          method: any
+          cors: true
+          authorizer: aws_iam
+      - http:
+          path: foo/{action}
+          method: any
+          cors: true
+          authorizer: aws_iam
+      - http:
+          path: foo/{action}/{id}
+          method: any
+          cors: true
+          authorizer: aws_iam
+

@@ -59,3 +59,17 @@ typings/
 
 # next.js build output
 .next
+
+# vim
+.*.sw*
+Session.vim
+
+# Serverless
+.webpack
+.serverless
+
+# env
+env.yml
+
+# Jetbrains IDEs
+.idea
