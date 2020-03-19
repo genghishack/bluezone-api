@@ -1,9 +1,15 @@
 import pg from 'pg';
-import getParams from './getParams';
+
+const {
+  DB_HOST: dbHost,
+  DB_NAME: dbName,
+  DB_USER: dbUser,
+  DB_PASS: dbPass,
+  STAGE: stage,
+} = process.env;
 
 const getPgConnectionString = async () => {
-  const params = await getParams('dev', 'postgres');
-  return Promise.resolve(`postgres://${params.user}:${params.pass}@${params.host}/${params.db}`);
+  return Promise.resolve(`postgres://${dbUser}:${dbPass}@${dbHost}/${dbName}`);
 };
 
 export const getPgClient = async () => {
@@ -19,8 +25,12 @@ export const pgQuery = async (sql, label) => {
 
   const client = await getPgClient();
 
-  const sqlLabel = (label) ? `SQL to ${label}: ` : 'SQL: ';
-  // console.log(sqlLabel, sql);
+  const sqlLabel = (label) ? `Query to ${label}` : 'Query';
+  if (stage !== 'prod') {
+    console.log(`${sqlLabel}: `, sql);
+  } else {
+    console.log(sqlLabel);
+  }
 
   try {
     client.connect();

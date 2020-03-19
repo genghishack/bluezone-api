@@ -1,7 +1,6 @@
 import { buildResponse, success, failure } from '../libs/response-lib';
 import { logError } from '../libs/logging';
 import { getUserDataFromEvent } from '../libs/event';
-import getParams from '../libs/getParams';
 
 import migration from './dbMigration/005_createTable_USState';
 
@@ -21,11 +20,10 @@ export async function main(event, context, callback) {
   });
   try {
     const user = await getUserDataFromEvent(event);
-    const params = await getParams('postgres');
     if (user.type !== 'iam') {
       throw (new Error('no permission'));
     }
-    response = await migration(params);
+    response = await migration();
     return callback(null, response);
   } catch (e) {
     logError(e);

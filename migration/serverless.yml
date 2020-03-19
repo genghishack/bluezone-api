@@ -23,8 +23,12 @@ provider:
   runtime: nodejs12.x
   stage: ${opt:stage}
   region: us-west-2
-#  environment:
-#    DB_NAME: ${ssm:/bluezone/${opt:stage}/postgres/db}
+  environment:
+    STAGE: ${opt:stage}
+    DB_NAME: ${ssm:/bluezone/${opt:stage}/postgres/db}
+    DB_HOST: ${ssm:/bluezone/${opt:stage}/postgres/host}
+    DB_USER: ${ssm:/bluezone/${opt:stage}/postgres/user}
+    DB_PASS: ${ssm:/bluezone/${opt:stage}/postgres/pass}
   apiGateway:
     restApiId:
       'Fn::ImportValue': apiGateway-restApiId
