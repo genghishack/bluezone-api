@@ -10,7 +10,7 @@ plugins:
 
 provider:
   name: aws
-  runtime: nodejs8.10
+  runtime: nodejs12.x
   stage: ${opt:stage}
   region: us-west-2
 
@@ -29,7 +29,26 @@ resources:
       Properties:
         Name: bluezone
 
+    CognitoUserPool:
+      Type: AWS::Cognito::UserPool
+      Properties:
+        UserPoolName: bluezone-user-pool
+        UsernameAttributes:
+          - email
+        AutoVerifiedAttributes:
+          - email
+
   Outputs:
+    UserPoolId:
+      Value:
+        Ref: CognitoUserPool
+
+    UserPoolArn:
+      Value:
+        Fn::GetAtt: [CognitoUserPool, Arn]
+      Export:
+        Name: CognitoUserPool-arn
+
     apiGatewayRestApiId:
       Value:
         Ref: ApiGatewayRestApi

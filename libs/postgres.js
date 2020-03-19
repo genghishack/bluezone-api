@@ -20,7 +20,7 @@ export const pgQuery = async (sql, label) => {
   const client = await getPgClient();
 
   const sqlLabel = (label) ? `SQL to ${label}: ` : 'SQL: ';
-  console.log(sqlLabel, sql);
+  // console.log(sqlLabel, sql);
 
   try {
     client.connect();

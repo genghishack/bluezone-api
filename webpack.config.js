@@ -11,7 +11,7 @@ module.exports = {
   // we exclude all node dependencies
   externals: [
     nodeExternals({
-      modulesDir: path.join(__dirname, '../node_modules'),
+      modulesDir: path.join(__dirname, 'node_modules'),
     }),
   ],
   mode: slsw.lib.webpack.isLocal ? 'development' : 'production',
