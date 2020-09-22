@@ -1,8 +1,9 @@
 import { buildResponse, success, failure } from '../libs/response-lib';
 import { logError } from '../libs/logging';
 import { getUserDataFromEvent } from '../libs/event';
+import fs from 'fs';
 
-import migration from './dbMigration/005_createTable_USState';
+import migration from './dbMigration/0.001_createTable_migration';
 
 /**
  *
