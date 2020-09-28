@@ -1,11 +1,17 @@
 import { buildResponse, success, failure } from '../../lib/response-lib';
+import { logError } from '../../lib/logging';
+import * as legislatorLib from '../../lib/legislator';
 
 async function getLegislator(user, id) {
-  // uses id
-  const message = 'single legislator';
-  console.log(message);
-  const response = success({ data: message });
-  return response;
+  let legislator = {};
+  try {
+    legislator = await legislatorLib.getLegislator(id)
+    console.log('legislator: ', legislator);
+    return success({ data: legislator, count: 1 });
+  } catch (e) {
+    logError(e);
+    return failure({ message: e.message });
+  }
 }
 
 async function deleteLegislator(user, id) {

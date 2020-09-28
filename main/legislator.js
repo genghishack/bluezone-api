@@ -37,16 +37,18 @@ export async function router(event, context, callback) {
 
   if (pathParameters) {
     let { action: stringToTest } = pathParameters;
-    if (stringToTest.indexOf(':') !== -1) {
-      stringToTest = stringToTest.split(':')[1];
-    }
-    if (regex.uuid.test(stringToTest)) {
+    // if (stringToTest.indexOf(':') !== -1) {
+    //   stringToTest = stringToTest.split(':')[1];
+    // }
+    if (regex.bioguide.test(stringToTest)) {
       id = pathParameters.action;
     } else {
       action = pathParameters.action;
       id = pathParameters.id;
     }
   }
+
+  // console.log('action: ', action, 'id: ', id);
 
   let response = buildResponse(405, {
     message: `Invalid HTTP Method: ${httpMethod}`,
