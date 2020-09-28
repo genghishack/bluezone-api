@@ -75,7 +75,7 @@ functions:
           authorizer: aws_iam
   legislator:
     handler: legislator.router
-    decsription: Endpoints for accessing legislator data
+    description: Endpoints for accessing legislator data
     events:
       - http:
           path: legislator
