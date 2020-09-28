@@ -23,13 +23,18 @@ provider:
   runtime: nodejs12.x
   stage: ${opt:stage}
   region: us-west-2
+  environment:
+    STAGE: ${opt:stage}
+    DB_NAME: ${ssm:/bluezone/${opt:stage}/postgres/db}
+    DB_HOST: ${ssm:/bluezone/${opt:stage}/postgres/host}
+    DB_USER: ${ssm:/bluezone/${opt:stage}/postgres/user}
+    DB_PASS: ${ssm:/bluezone/${opt:stage}/postgres/pass}
   apiGateway:
     restApiId:
       'Fn::ImportValue': apiGateway-restApiId
     restApiRootResourceId:
       'Fn::ImportValue': apiGateway-rootResourceId
   # 'iamRoleStatements' defines the permission policy for the Lambda function.
-  # In this case Lambda functions are granted with permissions to access DynamoDB.
   iamRoleStatements:
     - Effect: Allow
       Action:
@@ -51,6 +56,7 @@ provider:
 functions:
   foo:
     handler: foo.router
+    description: No-op template for API endpoints
     events:
       - http:
           path: foo
@@ -64,6 +70,25 @@ functions:
           authorizer: aws_iam
       - http:
           path: foo/{action}/{id}
+          method: any
+          cors: true
+          authorizer: aws_iam
+  legislator:
+    handler: legislator.router
+    decsription: Endpoints for accessing legislator data
+    events:
+      - http:
+          path: legislator
+          method: any
+          cors: true
+          authorizer: aws_iam
+      - http:
+          path: legislator/{action}
+          method: any
+          cors: true
+          authorizer: aws_iam
+      - http:
+          path: legislator/{action}/{id}
           method: any
           cors: true
           authorizer: aws_iam

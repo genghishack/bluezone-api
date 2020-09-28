@@ -1,6 +1,6 @@
-import collectionHandlers from './foo/collectionHandlers';
-import itemHandlers from './foo/itemHandlers';
-import actionHandlers from './foo/actionHandlers';
+import collectionHandlers from './legislator/collectionHandlers';
+import itemHandlers from './legislator/itemHandlers';
+import actionHandlers from './legislator/actionHandlers';
 import constants from '../lib/constants';
 import { getUserDataFromEvent } from '../lib/event';
 import { buildResponse, failure } from '../lib/response-lib';
@@ -9,7 +9,7 @@ import { logError } from '../lib/logging';
 const { regex } = constants;
 
 /**
- * Route the call to '/foo', '/foo/{id}' and '/foo/{action}/{id}' end points
+ * Route the call to '/legislator', '/legislator/{id}' and '/legislator/{action}/{id}' end points
  *
  * @export
  * @param {Object} event
