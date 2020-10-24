@@ -28,7 +28,9 @@ export async function router(event, context, callback) {
   let id;
   let data;
 
-  const userData = await getUserDataFromEvent(event);
+  // Calls to the 'legislator' set of endpoints are PUBLICLY ACCESSIBLE.
+  // const userData = await getUserDataFromEvent(event);
+  const userData = {};
   console.log('userData: ', userData);
 
   if (body) {
@@ -37,9 +39,6 @@ export async function router(event, context, callback) {
 
   if (pathParameters) {
     let { action: stringToTest } = pathParameters;
-    // if (stringToTest.indexOf(':') !== -1) {
-    //   stringToTest = stringToTest.split(':')[1];
-    // }
     if (regex.bioguide.test(stringToTest)) {
       id = pathParameters.action;
     } else {
