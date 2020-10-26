@@ -2,6 +2,7 @@ import { buildResponse, success, failure } from '../../lib/response-lib';
 import {logError} from "../../lib/logging";
 import * as stateLib from '../../lib/state';
 
+// open to anonymous users
 async function getDistrictsByState() {
   let statesWithDistricts = [];
   let districtsByState = {};
@@ -18,6 +19,7 @@ async function getDistrictsByState() {
   }
 }
 
+// open to anonymous users
 async function getStateAndDistrictBBoxes() {
   let result = {};
   let bboxes = {};
