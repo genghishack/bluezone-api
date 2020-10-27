@@ -75,17 +75,20 @@ functions:
           authorizer: aws_iam
   legislator:
     handler: legislator.router
-    description: Public endpoints for accessing legislator data
+    description: Endpoints for accessing legislator data
     events:
       - http:
           path: legislator
           method: get
           cors: true
+          authorizer: aws_iam
       - http:
           path: legislator/{action}
           method: get
           cors: true
+          authorizer: aws_iam
       - http:
           path: legislator/{action}/{id}
           method: get
           cors: true
+          authorizer: aws_iam
