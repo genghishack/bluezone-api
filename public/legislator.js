@@ -17,7 +17,7 @@ const { regex } = constants;
  * @param {function} callback
  */
 export async function router(event, context, callback) {
-  const { httpMethod, pathParameters, body } = event;
+  const { httpMethod, pathParameters, queryStringParameters, body } = event;
 
   console.log('event: ', event);
   console.log('httpMethod: ', httpMethod);
@@ -63,9 +63,9 @@ export async function router(event, context, callback) {
   try {
     if (httpMethod in handlers) {
       if (!action) {
-        response = await handlers[httpMethod](userData, id, data);
+        response = await handlers[httpMethod](userData, id, data, queryStringParameters);
       } else if (action in handlers[httpMethod]) {
-        response = await handlers[httpMethod][action](userData, id, data);
+        response = await handlers[httpMethod][action](userData, id, data, queryStringParameters);
       } else {
         response = buildResponse(406, {
           message: `Invalid Request: ${httpMethod} ${action}`,
