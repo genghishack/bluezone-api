@@ -1,4 +1,4 @@
-service: bz-main
+service: bz-public
 
 # Use the serverless-webpack plugin to transpile ES6
 plugins:
@@ -54,41 +54,35 @@ provider:
       Resource: '*'
 
 functions:
-  foo:
-    handler: foo.router
-    description: No-op template for API endpoints
-    events:
-      - http:
-          path: foo
-          method: any
-          cors: true
-          authorizer: aws_iam
-      - http:
-          path: foo/{action}
-          method: any
-          cors: true
-          authorizer: aws_iam
-      - http:
-          path: foo/{action}/{id}
-          method: any
-          cors: true
-          authorizer: aws_iam
   legislator:
     handler: legislator.router
-    description: Endpoints for accessing legislator data
+    description: Public endpoints for accessing legislator data
     events:
       - http:
-          path: legislator
+          path: public/legislator
           method: get
           cors: true
-          authorizer: aws_iam
       - http:
-          path: legislator/{action}
+          path: public/legislator/{action}
           method: get
           cors: true
-          authorizer: aws_iam
       - http:
-          path: legislator/{action}/{id}
+          path: public/legislator/{action}/{id}
           method: get
           cors: true
-          authorizer: aws_iam
+  state:
+    handler: state.router
+    description: Public endpoints for accessing state data
+    events:
+      - http:
+          path: public/state
+          method: get
+          cors: true
+      - http:
+          path: public/state/{action}
+          method: get
+          cors: true
+      - http:
+          path: public/state/{action}/{id}
+          method: get
+          cors: true

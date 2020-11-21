@@ -1,7 +1,7 @@
 import { buildResponse, success, failure } from '../../lib/response-lib';
 
-const actionHandlers = {
+const itemHandlers = {
   GET: {},
 };
 
-export default actionHandlers;
+export default itemHandlers;

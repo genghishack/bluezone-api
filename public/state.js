@@ -1,6 +1,6 @@
-import collectionHandlers from './foo/collectionHandlers';
-import itemHandlers from './foo/itemHandlers';
-import actionHandlers from './foo/actionHandlers';
+import collectionHandlers from './state/collectionHandlers';
+import itemHandlers from './state/itemHandlers';
+import actionHandlers from './state/actionHandlers';
 import constants from '../lib/constants';
 import { getUserDataFromEvent } from '../lib/event';
 import { buildResponse, failure } from '../lib/response-lib';
@@ -9,7 +9,7 @@ import { logError } from '../lib/logging';
 const { regex } = constants;
 
 /**
- * Route the call to '/foo', '/foo/{id}' and '/foo/{action}/{id}' end points
+ * Route the call to '/state', '/state/{id}' and '/state/{action}/{id}' end points
  *
  * @export
  * @param {Object} event
@@ -28,7 +28,9 @@ export async function router(event, context, callback) {
   let id;
   let data;
 
-  const userData = await getUserDataFromEvent(event);
+  // Calls to the 'state' set of endpoints are PUBLICLY ACCESSIBLE.
+  // const userData = await getUserDataFromEvent(event);
+  const userData = {};
   console.log('userData: ', userData);
 
   if (body) {
@@ -37,16 +39,15 @@ export async function router(event, context, callback) {
 
   if (pathParameters) {
     let { action: stringToTest } = pathParameters;
-    if (stringToTest.indexOf(':') !== -1) {
-      stringToTest = stringToTest.split(':')[1];
-    }
-    if (regex.uuid.test(stringToTest)) {
+    if (regex.state.test(stringToTest)) {
       id = pathParameters.action;
     } else {
       action = pathParameters.action;
       id = pathParameters.id;
     }
   }
+
+  console.log('action: ', action, 'id: ', id);
 
   let response = buildResponse(405, {
     message: `Invalid HTTP Method: ${httpMethod}`,

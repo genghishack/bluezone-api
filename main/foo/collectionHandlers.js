@@ -1,4 +1,4 @@
-import { buildResponse, success, failure } from '../../libs/response-lib';
+import { buildResponse, success, failure } from '../../lib/response-lib';
 
 async function createFoo(user, id, data) {
   // uses data
