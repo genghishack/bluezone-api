@@ -1,11 +1,10 @@
 {
   "name": "bluezone-api",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Bluezone Serverless API",
-  "main": "index.js",
-  "repository": "git@github.com:genghishack/bluezone-api.git",
   "author": "Chris Wade <genghishack@gmail.com>",
-  "license": "MIT",
+  "repository": "https://github.com/genghishack/bluezone-api.git",
+  "license": "GPL-3.0-or-later",
   "private": true,
   "devDependencies": {
     "babel-core": "^6.26.3",
