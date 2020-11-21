@@ -6,7 +6,7 @@ import {logError} from "../../lib/logging";
 async function listStates(user) {
   let states = [];
   try {
-    states = await stateLib.getAllStates()
+    states = await stateLib.getAllStates();
     console.log('states: ', states);
     return success({data: states, count: states.length});
   } catch (e) {

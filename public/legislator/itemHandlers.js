@@ -6,7 +6,7 @@ import * as legislatorLib from '../../lib/legislator';
 async function getLegislator(user, id) {
   let legislator = {};
   try {
-    legislator = await legislatorLib.getLegislator(id)
+    legislator = await legislatorLib.getLegislator(id);
     console.log('legislator: ', legislator);
     return success({data: legislator, count: 1});
   } catch (e) {
