@@ -1,10 +1,10 @@
 import collectionHandlers from './legislator/collectionHandlers';
 import itemHandlers from './legislator/itemHandlers';
 import actionHandlers from './legislator/actionHandlers';
-import constants from '../lib/constants';
-import { getUserDataFromEvent } from '../lib/event';
+import constants from '../constants';
+import { getUserDataFromEvent } from '../lib/event-lib';
 import { buildResponse, failure } from '../lib/response-lib';
-import { logError } from '../lib/logging';
+import { logError } from '../lib/logging-lib';
 
 const { regex } = constants;
 
