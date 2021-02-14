@@ -2,7 +2,7 @@ import collectionHandlers from './legislator/collectionHandlers';
 import itemHandlers from './legislator/itemHandlers';
 import actionHandlers from './legislator/actionHandlers';
 import constants from '../constants';
-import { getUserDataFromEvent } from '../lib/event-lib';
+import { getUserFromEvent } from '../lib/event-lib';
 import { buildResponse, failure } from '../lib/response-lib';
 import { logError } from '../lib/logging-lib';
 
@@ -29,7 +29,7 @@ export async function router(event, context, callback) {
   let data;
 
   // Calls to the 'legislator' set of endpoints are PUBLICLY ACCESSIBLE.
-  // const userData = await getUserDataFromEvent(event);
+  // const userData = await getUserFromEvent(event);
   const userData = {};
   console.log('userData: ', userData);
 

@@ -2,7 +2,7 @@ import collectionHandlers from './foo/collectionHandlers';
 import itemHandlers from './foo/itemHandlers';
 import actionHandlers from './foo/actionHandlers';
 import constants from '../constants';
-import { getUserDataFromEvent } from '../lib/event-lib';
+import { getUserFromEvent } from '../lib/event-lib';
 import { buildResponse, failure } from '../lib/response-lib';
 import { logError } from '../lib/logging-lib';
 
@@ -28,7 +28,7 @@ export async function router(event, context, callback) {
   let id;
   let data;
 
-  const userData = await getUserDataFromEvent(event);
+  const userData = await getUserFromEvent(event);
   console.log('userData: ', userData);
 
   if (body) {
