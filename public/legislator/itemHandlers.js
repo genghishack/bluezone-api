@@ -1,6 +1,6 @@
 import {buildResponse, success, failure} from '../../lib/response-lib';
-import {logError} from '../../lib/logging';
-import * as legislatorLib from '../../lib/legislator';
+import {logError} from '../../lib/logging-lib';
+import * as legislatorLib from '../../lib/legislator-lib';
 
 // open to anonymous users
 async function getLegislator(user, id) {

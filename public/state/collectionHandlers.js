@@ -1,6 +1,6 @@
 import { buildResponse, success, failure } from '../../lib/response-lib';
-import * as stateLib from '../../lib/state';
-import {logError} from "../../lib/logging";
+import * as stateLib from '../../lib/state-lib';
+import {logError} from "../../lib/logging-lib";
 
 // open to anonymous users
 async function listStates(user) {
