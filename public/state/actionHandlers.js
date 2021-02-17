@@ -1,6 +1,6 @@
 import { buildResponse, success, failure } from '../../lib/response-lib';
-import {logError} from "../../lib/logging-lib";
-import * as stateLib from '../../lib/state-lib';
+import {logDebug, logError} from "../../lib/logging-lib";
+import * as stateLib from '../../lib/queries/state-lib';
 
 // open to anonymous users
 async function getDistrictsByState() {
@@ -8,7 +8,7 @@ async function getDistrictsByState() {
   let districtsByState = {};
   try {
     statesWithDistricts = await stateLib.getAllStateDistricts();
-    console.log('states with districts: ', statesWithDistricts);
+    // logDebug({statesWithDistricts});
     statesWithDistricts.forEach(row => {
       districtsByState[row.state_usps] = row.district_nums;
     });
@@ -25,7 +25,7 @@ async function getStateAndDistrictBBoxes() {
   let bboxes = {};
   try {
     result = await stateLib.getStateAndDistrictBBoxes();
-    // console.log('state and district bboxes: ', result);
+    // logDebug('state and district bboxes: ', result);
     const [ row ] = result;
     const { state_bboxes: stateBBoxes, district_bboxes: districtBBoxes} = row;
     stateBBoxes.forEach(result => {
